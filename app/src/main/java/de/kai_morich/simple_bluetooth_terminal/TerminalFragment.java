@@ -36,11 +36,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private String deviceAddress;
     private SerialService service;
-
     private TextView receiveText;
     private TextView sendText;
     private TextUtil.HexWatcher hexWatcher;
-
     private Connected connected = Connected.False;
     private boolean initialStart = true;
     private boolean hexEnabled = false;
@@ -129,11 +127,12 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_terminal, container, false);
+        receiveText = view.findViewById(R.id.receive_text);                          // TextView performance decreases with number of spans
 
         receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-
+        sendText = view.findViewById(R.id.send_text);
         hexWatcher = new TextUtil.HexWatcher(sendText);
         hexWatcher.enable(hexEnabled);
         sendText.addTextChangedListener(hexWatcher);
